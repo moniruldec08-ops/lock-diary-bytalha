@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Lock, Eye, EyeOff } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -31,16 +32,16 @@ export default function LockSetup() {
   };
 
   return (
-    <div className="min-h-screen gradient-bg-2 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-elevated animate-scale-in">
+    <div className="min-h-screen gradient-bg-ocean flex items-center justify-center p-4 relative overflow-hidden">
+      <Card className="w-full max-w-md shadow-elevated animate-scale-in glass-effect">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
-            <div className="p-6 bg-primary/10 rounded-full animate-bounce-in">
-              <Lock className="w-12 h-12 text-primary animate-pulse-glow" />
+            <div className="animate-bounce-in">
+              <img src={logo} alt="Lock Diary" className="w-24 h-24 drop-shadow-2xl animate-pulse-glow" />
             </div>
           </div>
-          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Welcome to My Diary Pro
+          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-gradient">
+            Welcome to Lock Diary
           </CardTitle>
           <CardDescription className="text-base">
             Set up your password to keep your diary secure

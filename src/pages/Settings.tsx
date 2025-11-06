@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Lock, Moon, Sun, Download, Trophy, Palette } from "lucide-react";
+import { ArrowLeft, Lock, Moon, Sun, Download, Trophy, Palette, Award } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -86,6 +87,20 @@ export default function Settings() {
       <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4">
+          <Link to="/achievements">
+            <Card className="shadow-soft hover-lift cursor-pointer">
+              <CardContent className="pt-6 flex items-center gap-4">
+                <div className="p-3 rounded-full bg-success/10">
+                  <Award className="w-6 h-6 text-success" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Achievements</p>
+                  <p className="text-2xl font-bold">View →</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
           <Card className="shadow-soft">
             <CardContent className="pt-6 flex items-center gap-4">
               <div className="p-3 rounded-full bg-accent/10">
@@ -94,18 +109,6 @@ export default function Settings() {
               <div>
                 <p className="text-sm text-muted-foreground">Day Streak</p>
                 <p className="text-2xl font-bold">{streakCount}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="shadow-soft">
-            <CardContent className="pt-6 flex items-center gap-4">
-              <div className="p-3 rounded-full bg-primary/10">
-                <Palette className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Entries</p>
-                <p className="text-2xl font-bold">{totalEntries}</p>
               </div>
             </CardContent>
           </Card>

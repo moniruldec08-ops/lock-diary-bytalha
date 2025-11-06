@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { MoodSelector } from "@/components/MoodSelector";
 import { addEntry, getEntry, updateEntry, deleteEntry, updateStreak } from "@/lib/db";
+import { checkAchievements } from "@/lib/achievements";
+import { celebrateEntry } from "@/lib/confetti";
 import { toast } from "sonner";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -60,6 +62,8 @@ export default function EntryEditor() {
         date,
       });
       await updateStreak();
+      await checkAchievements();
+      celebrateEntry();
       toast.success("Entry saved! 🎉", {
         description: "Keep up the great work!",
       });
