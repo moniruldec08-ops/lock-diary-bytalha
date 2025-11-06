@@ -1,73 +1,136 @@
-# Welcome to your Lovable project
+# My Diary Pro 📔🔒
 
-## Project info
+A beautiful, secure, and modern Progressive Web App (PWA) for daily journaling.
 
-**URL**: https://lovable.dev/projects/6c2d378f-3f54-4dd7-877c-eea1302097b2
+## Features
 
-## How can I edit this code?
+✨ **Secure & Private**
+- Password-protected diary entries
+- Local-first storage (all data stays on your device)
+- No cloud sync required - complete privacy
 
-There are several ways of editing your application.
+📝 **Rich Journaling Experience**
+- Rich text editor with formatting options
+- Mood tracking with emoji
+- Tag your entries for easy organization
+- Search through all your entries
 
-**Use Lovable**
+🎨 **Beautiful Design**
+- Modern Material Design inspired UI
+- Smooth animations and transitions
+- Light and dark mode support
+- Gradient backgrounds
+- Responsive design for all devices
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6c2d378f-3f54-4dd7-877c-eea1302097b2) and start prompting.
+📊 **Track Your Journey**
+- Daily streak counter to motivate consistency
+- Total entries counter
+- Mood-based entry visualization
+- Calendar view of all entries
 
-Changes made via Lovable will be committed automatically to this repo.
+🚀 **Progressive Web App**
+- Install on any device (mobile, tablet, desktop)
+- Works offline
+- Fast and responsive
+- No app store required
 
-**Use your preferred IDE**
+## Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### First Time Setup
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Open the app
+2. Create a secure password (minimum 4 characters)
+3. Start writing your first entry!
 
-Follow these steps:
+### Daily Use
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Unlock your diary with your password
+2. Browse previous entries or create a new one
+3. Select your mood, write your thoughts, and add tags
+4. Save and maintain your streak!
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Technology Stack
 
-# Step 3: Install the necessary dependencies.
-npm i
+- **React** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **IndexedDB** - Local storage
+- **PWA** - Installable web app
+- **React Quill** - Rich text editor
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Installation
 
-**Edit a file directly in GitHub**
+### As a Web App
+Simply visit the URL and use it in your browser!
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Install as PWA
+1. Open the app in your browser
+2. Look for the "Install" prompt or menu option
+3. Click "Install" to add to your home screen/desktop
+4. Launch like a native app!
 
-**Use GitHub Codespaces**
+## Features in Detail
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Security
+- All data is stored locally on your device
+- Password protection on every launch
+- No data is sent to any server
+- Complete privacy guaranteed
 
-## What technologies are used for this project?
+### Rich Text Editor
+- **Bold**, *italic*, underline text
+- Create lists
+- Add colors
+- Format headings
+- Include links
 
-This project is built with:
+### Mood Tracking
+Track your emotional state with each entry:
+- 😊 Happy
+- 😔 Sad
+- 😡 Angry
+- 😌 Calm
+- 😰 Anxious
+- 😴 Tired
+- 🤩 Excited
+- 😐 Neutral
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Data Management
+- Export all entries as JSON backup
+- Import entries from backup
+- Change password anytime
+- Dark/Light theme switching
 
-## How can I deploy this project?
+## Privacy First
 
-Simply open [Lovable](https://lovable.dev/projects/6c2d378f-3f54-4dd7-877c-eea1302097b2) and click on Share -> Publish.
+My Diary Pro is built with privacy as the top priority:
+- **No tracking** - We don't track anything you do
+- **No analytics** - Your usage stays private
+- **No ads** - Clean, distraction-free experience
+- **Local storage only** - Your data never leaves your device
+- **No account required** - Just set a password and start writing
 
-## Can I connect a custom domain to my Lovable project?
+## Browser Compatibility
 
-Yes, you can!
+Works on all modern browsers:
+- ✅ Chrome/Edge (recommended)
+- ✅ Firefox
+- ✅ Safari
+- ✅ Mobile browsers (iOS Safari, Chrome)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Contributing
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This is an open-source project built with Lovable. Feel free to fork and customize!
+
+## Support
+
+For issues or questions, please open an issue on the project repository.
+
+## License
+
+MIT License - feel free to use and modify!
+
+---
+
+**Start your journaling journey today!** 📔✨
