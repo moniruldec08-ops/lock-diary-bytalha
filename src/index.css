@@ -115,6 +115,12 @@ All colors MUST be HSL.
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+  
+  html {
+    overflow-x: hidden;
+    width: 100%;
   }
 
   body {
@@ -122,6 +128,9 @@ All colors MUST be HSL.
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     font-size: 20px;
     line-height: 1.7;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 
   /* Increase base text sizes */

@@ -73,119 +73,91 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[hsl(222,47%,11%)] overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg shadow-soft border-b border-border">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")}>
-            <ArrowLeft className="w-5 h-5" />
+      <header className="sticky top-0 z-50 bg-[hsl(222,47%,15%)] border-b border-white/10">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-4">
+          <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")} className="text-white/80 hover:text-white">
+            <ArrowLeft className="w-6 h-6" />
           </Button>
-          <h1 className="text-xl font-bold">Settings</h1>
+          <h1 className="text-xl font-bold text-white">Settings</h1>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <main className="max-w-4xl mx-auto px-4 py-4 space-y-4">
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <Link to="/achievements">
-            <Card className="shadow-soft hover-lift cursor-pointer">
-              <CardContent className="pt-6 flex items-center gap-4">
-                <div className="p-3 rounded-full bg-success/10">
-                  <Award className="w-6 h-6 text-success" />
+            <div className="bg-[hsl(222,47%,15%)] rounded-2xl border border-white/10 p-4 hover:bg-[hsl(222,47%,18%)] transition-colors cursor-pointer">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-green-500/20">
+                  <Award className="w-5 h-5 text-green-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Achievements</p>
-                  <p className="text-2xl font-bold">View →</p>
+                  <p className="text-xs text-white/60">Achievements</p>
+                  <p className="text-lg font-bold text-white">View →</p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </Link>
 
-          <Card className="shadow-soft">
-            <CardContent className="pt-6 flex items-center gap-4">
-              <div className="p-3 rounded-full bg-accent/10">
-                <Trophy className="w-6 h-6 text-accent" />
+          <div className="bg-[hsl(222,47%,15%)] rounded-2xl border border-white/10 p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-orange-500/20">
+                <Trophy className="w-5 h-5 text-orange-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Day Streak</p>
-                <p className="text-2xl font-bold">{streakCount}</p>
+                <p className="text-xs text-white/60">Day Streak</p>
+                <p className="text-lg font-bold text-white">{streakCount}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
-        {/* Theme */}
-        <Card className="shadow-soft">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              {isDark ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-              Appearance
-            </CardTitle>
-            <CardDescription>Customize your diary's look</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="dark-mode">Dark Mode</Label>
-              <Switch
-                id="dark-mode"
-                checked={isDark}
-                onCheckedChange={toggleTheme}
-              />
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Security */}
-        <Card className="shadow-soft">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Lock className="w-5 h-5" />
-              Security
-            </CardTitle>
-            <CardDescription>Change your diary password</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="new-password">New Password</Label>
+        <div className="bg-[hsl(222,47%,15%)] rounded-2xl border border-white/10 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Lock className="w-5 h-5 text-white" />
+            <h3 className="text-lg font-bold text-white">Security</h3>
+          </div>
+          <p className="text-sm text-white/60 mb-4">Change your diary password</p>
+          <div className="space-y-3">
+            <div>
+              <Label htmlFor="new-password" className="text-white/80 text-sm">New Password</Label>
               <Input
                 id="new-password"
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password (min. 4 characters)"
+                className="mt-1 bg-white/5 border-white/10 text-white placeholder:text-white/40"
               />
             </div>
-            <Button onClick={handleChangePassword} className="w-full">
+            <Button onClick={handleChangePassword} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
               Update Password
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Data Management */}
-        <Card className="shadow-soft">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Download className="w-5 h-5" />
-              Data Management
-            </CardTitle>
-            <CardDescription>Export or backup your diary</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Button onClick={handleExportData} variant="outline" className="w-full">
-              <Download className="w-4 h-4 mr-2" />
-              Export All Entries (JSON)
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="bg-[hsl(222,47%,15%)] rounded-2xl border border-white/10 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Download className="w-5 h-5 text-white" />
+            <h3 className="text-lg font-bold text-white">Data Management</h3>
+          </div>
+          <p className="text-sm text-white/60 mb-4">Export or backup your diary</p>
+          <Button onClick={handleExportData} className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20">
+            <Download className="w-4 h-4 mr-2" />
+            Export All Entries (JSON)
+          </Button>
+        </div>
 
         {/* About */}
-        <Card className="shadow-soft">
-          <CardContent className="pt-6 text-center text-sm text-muted-foreground">
-            <p className="font-semibold text-primary mb-1">My Diary Pro</p>
-            <p>Version 1.0.0</p>
-            <p className="mt-2">Your private, secure digital journal</p>
-          </CardContent>
-        </Card>
+        <div className="bg-[hsl(222,47%,15%)] rounded-2xl border border-white/10 p-6 text-center">
+          <p className="font-semibold text-purple-400 mb-1">My Diary Pro</p>
+          <p className="text-white/60 text-sm">Version 1.0.0</p>
+          <p className="mt-2 text-white/60 text-sm">Your private, secure digital journal</p>
+        </div>
       </main>
     </div>
   );

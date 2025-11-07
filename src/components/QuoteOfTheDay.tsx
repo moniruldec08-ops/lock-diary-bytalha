@@ -34,12 +34,12 @@ export default function QuoteOfTheDay() {
   if (!quote) return null;
 
   return (
-    <div className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 p-6 rounded-2xl border border-primary/20 shadow-soft animate-fade-in">
+    <div className="bg-purple-500/10 p-4 rounded-2xl border border-purple-500/20">
       <div className="flex items-start gap-3">
-        <Sparkles className="w-6 h-6 text-primary flex-shrink-0 mt-1 animate-pulse-glow" />
+        <Sparkles className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-semibold text-primary mb-1">Quote of the Day</p>
-          <p className="text-foreground italic">&ldquo;{quote}&rdquo;</p>
+          <p className="text-xs font-semibold text-purple-400 mb-1">Quote of the Day</p>
+          <p className="text-white/80 text-sm italic">&ldquo;{quote}&rdquo;</p>
         </div>
       </div>
     </div>
