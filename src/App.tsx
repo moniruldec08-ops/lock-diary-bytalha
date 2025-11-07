@@ -53,7 +53,7 @@ const App = () => {
             <Route path="/unlock" element={<Unlock />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/entry/:id" element={<EntryEditor />} />
-            <Route path="/detail/:id" element={<EntryDetail />} />
+            <Route path="/view/:id" element={<EntryDetail />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/achievements" element={<Achievements />} />
             <Route path="*" element={<NotFound />} />

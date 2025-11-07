@@ -115,8 +115,8 @@ export default function Dashboard() {
         ) : (
           <div className="space-y-4">
             {filteredEntries.map((entry, index) => (
-              <Link key={entry.id} to={`/entry/${entry.id}`}>
-                <Card 
+              <Link key={entry.id} to={`/view/${entry.id}`}>
+                <Card
                   className="group hover:shadow-elevated transition-all hover:scale-[1.02] cursor-pointer animate-fade-in"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >

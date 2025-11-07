@@ -56,13 +56,14 @@ export default function EntryEditor() {
     let savedId = id;
     
     if (isNew) {
-      savedId = await addEntry({
+      const newEntry = await addEntry({
         title,
         content,
         mood,
         tags: tagArray,
         date,
       });
+      savedId = newEntry.id;
       await updateStreak();
       await checkAchievements();
       celebrateEntry();
