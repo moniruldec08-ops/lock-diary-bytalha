@@ -3,13 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
 import { MoodSelector } from "@/components/MoodSelector";
 import { addEntry, getEntry, updateEntry, deleteEntry, updateStreak } from "@/lib/db";
 import { checkAchievements } from "@/lib/achievements";
 import { celebrateEntry } from "@/lib/confetti";
 import { toast } from "sonner";
+import { format } from "date-fns";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -106,78 +105,74 @@ export default function EntryEditor() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-[hsl(222,47%,11%)] flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg shadow-soft border-b border-border">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")}>
-            <ArrowLeft className="w-5 h-5" />
+      <header className="flex-shrink-0 bg-[hsl(222,47%,15%)] border-b border-white/10">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")} className="text-white/80 hover:text-white">
+            <ArrowLeft className="w-6 h-6" />
           </Button>
-          <h1 className="text-lg font-bold">
-            {isNew ? "New Entry" : "Edit Entry"}
-          </h1>
           <div className="flex gap-2">
             {!isNew && (
-              <Button variant="ghost" size="icon" onClick={handleDelete}>
-                <Trash2 className="w-5 h-5 text-destructive" />
+              <Button variant="ghost" size="icon" onClick={handleDelete} className="text-red-400 hover:text-red-300">
+                <Trash2 className="w-5 h-5" />
               </Button>
             )}
-            <Button onClick={handleSave} size="sm" className="shadow-glow">
-              <Save className="w-4 h-4 mr-2" />
+            <Button onClick={handleSave} className="bg-blue-500 hover:bg-blue-600 text-white px-6">
               Save
             </Button>
           </div>
         </div>
       </header>
 
-      {/* Editor */}
-      <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-        <Card className="shadow-soft animate-fade-in">
-          <CardContent className="pt-6 space-y-6">
-            {/* Title */}
-            <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Give your entry a title..."
-                className="text-lg font-semibold"
-              />
-            </div>
+      {/* Editor - Full Screen */}
+      <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+        {/* Date and Mood */}
+        <div className="flex items-center justify-between">
+          <div className="text-white/60 text-base">
+            {format(new Date(), 'dd MMM yyyy')}
+          </div>
+          <div className="text-4xl">
+            {mood === 'happy' && '😊'}
+            {mood === 'sad' && '😢'}
+            {mood === 'excited' && '🤩'}
+            {mood === 'calm' && '😌'}
+            {mood === 'angry' && '😠'}
+            {mood === 'anxious' && '😰'}
+          </div>
+        </div>
 
-            {/* Mood Selector */}
-            <div className="space-y-2">
-              <Label>How are you feeling?</Label>
-              <MoodSelector value={mood} onChange={setMood} />
-            </div>
+        {/* Title */}
+        <Input
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          className="bg-transparent border-none text-white/60 text-lg font-normal px-0 focus-visible:ring-0 placeholder:text-white/40"
+        />
 
-            {/* Content */}
-            <div className="space-y-2">
-              <Label>Your thoughts</Label>
-              <div className="bg-card rounded-lg overflow-hidden border border-border">
-                <ReactQuill
-                  theme="snow"
-                  value={content}
-                  onChange={setContent}
-                  modules={modules}
-                  placeholder="Start writing your diary entry..."
-                />
-              </div>
-            </div>
+        {/* Content */}
+        <div className="bg-transparent">
+          <ReactQuill
+            theme="snow"
+            value={content}
+            onChange={setContent}
+            modules={modules}
+            placeholder="Write more here..."
+            className="quill-dark-fullscreen"
+          />
+        </div>
 
-            {/* Tags */}
-            <div className="space-y-2">
-              <Label htmlFor="tags">Tags (comma separated)</Label>
-              <Input
-                id="tags"
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                placeholder="work, personal, travel..."
-              />
-            </div>
-          </CardContent>
-        </Card>
+        {/* Hidden Mood Selector and Tags - accessible via toolbar */}
+        <div className="hidden">
+          <MoodSelector value={mood} onChange={setMood} />
+          <Input
+            id="tags"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            placeholder="work, personal, travel..."
+          />
+        </div>
       </main>
     </div>
   );

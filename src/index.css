@@ -120,7 +120,8 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    font-size: 16px;
+    font-size: 20px;
+    line-height: 1.7;
   }
 
   /* Increase base text sizes */
@@ -269,6 +270,7 @@ All colors MUST be HSL.
   /* Rich text editor styles */
   .ql-container {
     @apply rounded-b-lg border-border;
+    font-size: 18px;
   }
 
   .ql-toolbar {
@@ -276,6 +278,62 @@ All colors MUST be HSL.
   }
 
   .ql-editor {
-    @apply min-h-[200px] text-base;
+    @apply min-h-[400px];
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  .ql-editor.ql-blank::before {
+    font-style: normal;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Dark Full Screen Quill */
+  .quill-dark-fullscreen .ql-toolbar {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 0;
+  }
+
+  .quill-dark-fullscreen .ql-container {
+    border: none;
+    background: transparent;
+    font-size: 18px;
+  }
+
+  .quill-dark-fullscreen .ql-editor {
+    min-height: 60vh;
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0;
+  }
+
+  .quill-dark-fullscreen .ql-editor.ql-blank::before {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: normal;
+  }
+
+  .quill-dark-fullscreen .ql-stroke {
+    stroke: rgba(255, 255, 255, 0.6);
+  }
+
+  .quill-dark-fullscreen .ql-fill {
+    fill: rgba(255, 255, 255, 0.6);
+  }
+
+  .quill-dark-fullscreen .ql-picker-label {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .quill-dark-fullscreen .ql-toolbar button:hover .ql-stroke,
+  .quill-dark-fullscreen .ql-toolbar button.ql-active .ql-stroke {
+    stroke: rgba(255, 255, 255, 1);
+  }
+
+  .quill-dark-fullscreen .ql-toolbar button:hover .ql-fill,
+  .quill-dark-fullscreen .ql-toolbar button.ql-active .ql-fill {
+    fill: rgba(255, 255, 255, 1);
   }
 }

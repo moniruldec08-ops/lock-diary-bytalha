@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getEntry, deleteEntry, DiaryEntry } from "@/lib/db";
 import { getMoodEmoji } from "@/components/MoodSelector";
@@ -50,18 +49,18 @@ export default function EntryDetail() {
   }
 
   return (
-    <div className="min-h-screen gradient-bg-1">
+    <div className="min-h-screen bg-[hsl(222,47%,11%)] flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg shadow-soft border-b border-border">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")}>
-            <ArrowLeft className="w-5 h-5" />
+      <header className="flex-shrink-0 bg-[hsl(222,47%,15%)] border-b border-white/10">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")} className="text-white/80 hover:text-white">
+            <ArrowLeft className="w-6 h-6" />
           </Button>
           <div className="flex gap-2">
-            <Button variant="ghost" size="icon" onClick={handleDelete}>
-              <Trash2 className="w-5 h-5 text-destructive" />
+            <Button variant="ghost" size="icon" onClick={handleDelete} className="text-red-400 hover:text-red-300">
+              <Trash2 className="w-5 h-5" />
             </Button>
-            <Button size="sm" className="shadow-glow" asChild>
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white px-4" asChild>
               <Link to={`/entry/${id}`}>
                 <Edit className="w-4 h-4 mr-2" />
                 Edit
@@ -71,45 +70,39 @@ export default function EntryDetail() {
         </div>
       </header>
 
-      {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        <Card className="shadow-elevated animate-fade-in overflow-hidden">
-          {/* Decorative header with mood */}
-          <div className="h-32 gradient-bg-3 flex items-center justify-center">
-            <div className="text-8xl animate-float">
-              {getMoodEmoji(entry.mood)}
-            </div>
+      {/* Content - Full Screen */}
+      <main className="flex-1 overflow-y-auto px-4 py-6">
+        {/* Date and Mood */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="text-white/60 text-base">
+            {format(new Date(entry.createdAt), 'dd MMM yyyy • h:mm a')}
           </div>
+          <div className="text-4xl">
+            {getMoodEmoji(entry.mood)}
+          </div>
+        </div>
 
-          <CardContent className="p-6 space-y-6">
-            {/* Title and date */}
-            <div>
-              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                {entry.title}
-              </h1>
-              <p className="text-muted-foreground">
-                {format(new Date(entry.createdAt), 'EEEE, dd MMMM yyyy • h:mm a')}
-              </p>
-            </div>
+        {/* Title */}
+        <h1 className="text-white text-2xl font-semibold mb-4">
+          {entry.title}
+        </h1>
 
-            {/* Tags */}
-            {entry.tags && entry.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {entry.tags.map((tag, i) => (
-                  <Badge key={i} variant="secondary" className="text-sm">
-                    #{tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
+        {/* Tags */}
+        {entry.tags && entry.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {entry.tags.map((tag, i) => (
+              <Badge key={i} variant="secondary" className="bg-blue-500/20 text-blue-300 text-sm border-0">
+                #{tag}
+              </Badge>
+            ))}
+          </div>
+        )}
 
-            {/* Content */}
-            <div 
-              className="prose prose-lg max-w-none dark:prose-invert"
-              dangerouslySetInnerHTML={{ __html: entry.content }}
-            />
-          </CardContent>
-        </Card>
+        {/* Content */}
+        <div 
+          className="text-white/90 text-lg leading-relaxed prose prose-lg max-w-none prose-invert prose-headings:text-white prose-p:text-white/90 prose-strong:text-white prose-em:text-white/80"
+          dangerouslySetInnerHTML={{ __html: entry.content }}
+        />
       </main>
     </div>
   );
