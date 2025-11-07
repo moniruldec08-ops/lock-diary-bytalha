@@ -53,8 +53,10 @@ export default function EntryEditor() {
     const tagArray = tags.split(",").map(t => t.trim()).filter(Boolean);
     const date = new Date().toISOString();
 
+    let savedId = id;
+    
     if (isNew) {
-      await addEntry({
+      savedId = await addEntry({
         title,
         content,
         mood,
@@ -78,7 +80,7 @@ export default function EntryEditor() {
       toast.success("Entry updated!");
     }
 
-    navigate("/dashboard");
+    navigate(`/view/${savedId}`);
   };
 
   const handleDelete = async () => {
