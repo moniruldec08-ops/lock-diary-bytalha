@@ -51,6 +51,11 @@ export default function Dashboard() {
                 <Menu className="w-6 h-6" />
               </Link>
             </Button>
+            <Button variant="ghost" size="icon" asChild className="text-white/80 hover:text-white hover:bg-white/10">
+              <Link to="/calendar">
+                <Calendar className="w-6 h-6" />
+              </Link>
+            </Button>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent animate-gradient">
               My Diary
             </h1>

@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Lock, Moon, Sun, Download, Trophy, Palette, Award } from "lucide-react";
+import { ArrowLeft, Lock, Moon, Sun, Download, Trophy, Palette, Award, Volume2, VolumeX } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
 import { getSetting, setSetting, setLockPassword, getAllEntries } from "@/lib/db";
 import { toast } from "sonner";
+import { useAmbientSound, AmbientSoundType } from "@/hooks/use-ambient-sound";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ export default function Settings() {
   const [newPassword, setNewPassword] = useState("");
   const [streakCount, setStreakCount] = useState(0);
   const [totalEntries, setTotalEntries] = useState(0);
+  const { currentSound, volume, playSound, changeVolume } = useAmbientSound();
 
   useEffect(() => {
     loadSettings();
@@ -136,6 +139,51 @@ export default function Settings() {
             <Button onClick={handleChangePassword} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
               Update Password
             </Button>
+          </div>
+        </div>
+
+        {/* Ambient Sounds */}
+        <div className="bg-[hsl(222,47%,15%)] rounded-2xl border border-white/10 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Volume2 className="w-5 h-5 text-white" />
+            <h3 className="text-lg font-bold text-white">Ambient Sounds</h3>
+          </div>
+          <p className="text-sm text-white/60 mb-4">Play soft background sounds while writing</p>
+          
+          <div className="space-y-4">
+            <div>
+              <Label className="text-white/80 text-sm mb-2 block">Sound Type</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {(['none', 'rain', 'ocean', 'forest'] as AmbientSoundType[]).map((sound) => (
+                  <Button
+                    key={sound}
+                    onClick={() => playSound(sound)}
+                    variant={currentSound === sound ? "default" : "outline"}
+                    className={currentSound === sound 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0" 
+                      : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10"
+                    }
+                  >
+                    {sound === 'none' ? <VolumeX className="w-4 h-4 mr-2" /> : <Volume2 className="w-4 h-4 mr-2" />}
+                    {sound.charAt(0).toUpperCase() + sound.slice(1)}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <Label className="text-white/80 text-sm">Volume</Label>
+                <span className="text-white/60 text-sm">{Math.round(volume * 100)}%</span>
+              </div>
+              <Slider
+                value={[volume]}
+                onValueChange={([val]) => changeVolume(val)}
+                max={1}
+                step={0.01}
+                className="w-full"
+              />
+            </div>
           </div>
         </div>
 

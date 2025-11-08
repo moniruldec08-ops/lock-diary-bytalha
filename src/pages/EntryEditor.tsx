@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useAmbientSound } from "@/hooks/use-ambient-sound";
 
 export default function EntryEditor() {
   const { id } = useParams();
@@ -22,10 +23,15 @@ export default function EntryEditor() {
   const [content, setContent] = useState("");
   const [mood, setMood] = useState("happy");
   const [tags, setTags] = useState("");
+  const { currentSound, playSound } = useAmbientSound();
 
   useEffect(() => {
     if (!isNew && id) {
       loadEntry(id);
+    }
+    // Auto-play saved ambient sound when editor opens
+    if (currentSound !== 'none') {
+      playSound(currentSound);
     }
   }, [id, isNew]);
 
