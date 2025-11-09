@@ -7,7 +7,6 @@ import { getEntry, deleteEntry, DiaryEntry, getAllEntries } from "@/lib/db";
 import { getMoodEmoji } from "@/components/MoodSelector";
 import { format } from "date-fns";
 import { toast } from "sonner";
-import { useAmbientSound } from "@/hooks/use-ambient-sound";
 
 export default function EntryDetail() {
   const { id } = useParams();
@@ -16,7 +15,6 @@ export default function EntryDetail() {
   const [allEntries, setAllEntries] = useState<DiaryEntry[]>([]);
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
-  const { currentSound, playSound } = useAmbientSound();
 
   useEffect(() => {
     loadAllEntries();
@@ -25,10 +23,6 @@ export default function EntryDetail() {
   useEffect(() => {
     if (id) {
       loadEntry(id);
-    }
-    // Auto-play saved ambient sound when viewing entry
-    if (currentSound !== 'none') {
-      playSound(currentSound);
     }
   }, [id]);
 

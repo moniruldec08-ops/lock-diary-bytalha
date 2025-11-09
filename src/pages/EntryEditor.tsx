@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useAmbientSound } from "@/hooks/use-ambient-sound";
+import { soundManager } from "@/lib/sounds";
 
 export default function EntryEditor() {
   const { id } = useParams();
@@ -23,15 +23,10 @@ export default function EntryEditor() {
   const [content, setContent] = useState("");
   const [mood, setMood] = useState("happy");
   const [tags, setTags] = useState("");
-  const { currentSound, playSound } = useAmbientSound();
 
   useEffect(() => {
     if (!isNew && id) {
       loadEntry(id);
-    }
-    // Auto-play saved ambient sound when editor opens
-    if (currentSound !== 'none') {
-      playSound(currentSound);
     }
   }, [id, isNew]);
 
@@ -73,6 +68,7 @@ export default function EntryEditor() {
       await updateStreak();
       await checkAchievements();
       celebrateEntry();
+      soundManager.entrySaved();
       toast.success("Entry saved! 🎉", {
         description: "Keep up the great work!",
       });
@@ -94,6 +90,7 @@ export default function EntryEditor() {
     if (id && !isNew) {
       if (confirm("Are you sure you want to delete this entry?")) {
         await deleteEntry(id);
+        soundManager.delete();
         toast.success("Entry deleted");
         navigate("/dashboard");
       }

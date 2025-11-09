@@ -1,6 +1,7 @@
 import { getAllEntries, getSetting, setSetting } from './db';
 import { toast } from 'sonner';
 import { celebrateMilestone } from './confetti';
+import { soundManager } from './sounds';
 
 export interface Achievement {
   id: string;
@@ -41,7 +42,6 @@ export async function checkAchievements() {
   }
   if (entries.length >= 100 && !unlockedAchievements.includes('hundred_entries')) {
     newUnlocked.push('hundred_entries');
-    celebrateMilestone();
   }
 
   // Check streak achievements
@@ -50,7 +50,6 @@ export async function checkAchievements() {
   }
   if (streakCount >= 30 && !unlockedAchievements.includes('month_streak')) {
     newUnlocked.push('month_streak');
-    celebrateMilestone();
   }
 
   // Check mood diversity
@@ -72,6 +71,18 @@ export async function checkAchievements() {
   if (newUnlocked.length > 0) {
     const allUnlocked = [...unlockedAchievements, ...newUnlocked];
     await setSetting('achievements', JSON.stringify(allUnlocked));
+
+    // Check if celebration needed for major achievements
+    const needsCelebration = newUnlocked.some(id => 
+      id === 'hundred_entries' || id === 'month_streak'
+    );
+
+    if (needsCelebration) {
+      celebrateMilestone();
+      soundManager.milestone();
+    } else {
+      soundManager.achievement();
+    }
 
     newUnlocked.forEach(id => {
       const achievement = achievementsList.find(a => a.id === id);
