@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { getAllEntries, DiaryEntry } from "@/lib/db";
+import { getAllEntries } from "@/lib/storage";
+import type { DiaryEntry } from "@/lib/db";
 import { getMoodEmoji } from "@/components/MoodSelector";
 import { format } from "date-fns";
 

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Save, Trash2, Smile } from "lucide-react";
+import { ArrowLeft, Save, Trash2, Smile, Menu as MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MoodSelector } from "@/components/MoodSelector";
-import { addEntry, getEntry, updateEntry, deleteEntry, updateStreak } from "@/lib/db";
+import { updateStreak } from "@/lib/db";
+import { addEntry, getEntry, updateEntry, deleteEntry } from "@/lib/storage";
 import { checkAchievements } from "@/lib/achievements";
 import { celebrateEntry } from "@/lib/confetti";
 import { toast } from "sonner";
@@ -131,6 +132,9 @@ export default function EntryEditor() {
                 <MoodSelector value={mood} onChange={setMood} />
               </DialogContent>
             </Dialog>
+            <Button variant="ghost" size="icon" className="text-white/80 hover:text-white hover:bg-white/10">
+              <MenuIcon className="w-5 h-5" />
+            </Button>
             {!isNew && (
               <Button variant="ghost" size="icon" onClick={handleDelete} className="text-red-400 hover:text-red-300 hover:bg-red-400/10">
                 <Trash2 className="w-5 h-5" />

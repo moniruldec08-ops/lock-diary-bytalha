@@ -4,8 +4,11 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { isLockSetup } from "@/lib/db";
+import { isLockSetup, getSetting } from "@/lib/db";
 import SplashScreen from "./components/SplashScreen";
+import StorageModeSelection from "./pages/StorageModeSelection";
+import CloudAuth from "./pages/CloudAuth";
+import ResetPassword from "./pages/ResetPassword";
 import LockSetup from "./pages/LockSetup";
 import Unlock from "./pages/Unlock";
 import Dashboard from "./pages/Dashboard";
@@ -21,14 +24,17 @@ const queryClient = new QueryClient();
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showSplash, setShowSplash] = useState(true);
+  const [hasStorageMode, setHasStorageMode] = useState(false);
   const [hasLock, setHasLock] = useState(false);
 
   useEffect(() => {
-    checkLockStatus();
+    checkAppStatus();
   }, []);
 
-  const checkLockStatus = async () => {
+  const checkAppStatus = async () => {
+    const storageMode = await getSetting('storageMode');
     const lockExists = await isLockSetup();
+    setHasStorageMode(!!storageMode);
     setHasLock(lockExists);
     setIsLoading(false);
   };
@@ -48,9 +54,18 @@ const App = () => {
             <Route
               path="/"
               element={
-                hasLock ? <Navigate to="/unlock" replace /> : <Navigate to="/setup" replace />
+                !hasStorageMode ? (
+                  <Navigate to="/storage-mode" replace />
+                ) : hasLock ? (
+                  <Navigate to="/unlock" replace />
+                ) : (
+                  <Navigate to="/setup" replace />
+                )
               }
             />
+            <Route path="/storage-mode" element={<StorageModeSelection />} />
+            <Route path="/cloud-auth" element={<CloudAuth />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup" element={<LockSetup />} />
             <Route path="/unlock" element={<Unlock />} />
             <Route path="/dashboard" element={<Dashboard />} />

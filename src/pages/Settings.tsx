@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Lock, Download, Award, Volume2, Trophy } from "lucide-react";
+import { ArrowLeft, Lock, Download, Award, Volume2, Trophy, Cloud, HardDrive } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getSetting, setSetting, setLockPassword, getAllEntries } from "@/lib/db";
+import { getSetting, setSetting, setLockPassword } from "@/lib/db";
+import { getAllEntries, getStorageMode, migrateToCloud } from "@/lib/storage";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export default function Settings() {
@@ -13,6 +15,8 @@ export default function Settings() {
   const [newPassword, setNewPassword] = useState("");
   const [streakCount, setStreakCount] = useState(0);
   const [totalEntries, setTotalEntries] = useState(0);
+  const [storageMode, setStorageMode] = useState<'local' | 'cloud'>('local');
+  const [isMigrating, setIsMigrating] = useState(false);
 
   useEffect(() => {
     loadSettings();
@@ -24,6 +28,9 @@ export default function Settings() {
 
     const entries = await getAllEntries();
     setTotalEntries(entries.length);
+
+    const mode = await getStorageMode();
+    setStorageMode(mode);
   };
 
 
@@ -48,6 +55,32 @@ export default function Settings() {
     link.download = `my-diary-backup-${Date.now()}.json`;
     link.click();
     toast.success("Diary exported successfully!");
+  };
+
+  const handleMigrateToCloud = async () => {
+    if (storageMode === 'cloud') {
+      toast.info("Already using cloud storage");
+      return;
+    }
+
+    setIsMigrating(true);
+    try {
+      const { data: session } = await supabase.auth.getSession();
+      if (!session.session) {
+        toast.error("Please sign in to migrate to cloud");
+        navigate('/cloud-auth');
+        return;
+      }
+
+      await migrateToCloud();
+      setStorageMode('cloud');
+      toast.success("Successfully migrated to cloud storage!");
+      await loadSettings();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to migrate to cloud");
+    } finally {
+      setIsMigrating(false);
+    }
   };
 
   return (
@@ -126,6 +159,38 @@ export default function Settings() {
           <p className="text-sm text-white/60">
             Interactive sound effects enhance your experience when saving entries, unlocking achievements, and completing actions. Sounds play automatically at full volume.
           </p>
+        </div>
+
+        {/* Storage Mode */}
+        <div className="bg-[hsl(222,47%,15%)] rounded-2xl border border-white/10 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            {storageMode === 'cloud' ? (
+              <Cloud className="w-5 h-5 text-purple-400" />
+            ) : (
+              <HardDrive className="w-5 h-5 text-blue-400" />
+            )}
+            <h3 className="text-lg font-bold text-white">Storage Mode</h3>
+          </div>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+              <span className="text-white/80 text-sm">Current Mode</span>
+              <span className="text-white font-semibold capitalize">{storageMode}</span>
+            </div>
+            {storageMode === 'local' && (
+              <Button 
+                onClick={handleMigrateToCloud}
+                disabled={isMigrating}
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+              >
+                {isMigrating ? "Migrating..." : "Migrate to Cloud Storage"}
+              </Button>
+            )}
+            <p className="text-xs text-white/40">
+              {storageMode === 'cloud' 
+                ? "Your entries are synced across devices" 
+                : "Your entries are stored locally on this device"}
+            </p>
+          </div>
         </div>
 
         {/* Data Management */}
